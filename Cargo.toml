@@ -8,3 +8,6 @@ edition = "2018"
 [dependencies]
 wasmtime = "0.31.0"
 anyhow = "1.0.51"
+wasmer = "2.0"
+wasmer-engine-universal = "2.1.0"
+wasmer-compiler-cranelift = "2.1.0"
