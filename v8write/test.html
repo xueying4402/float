@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>
+
+    </h1>
+    <script>
+        // function loadWebAssembly(path, imports = {}) {
+        //     return fetch(path) // 加载文件
+        //         .then(response => response.arrayBuffer()) // 转成 ArrayBuffer
+        //         .then(buffer => {
+        //             return WebAssembly.instantiate(buffer, imports)
+        //         })
+        // }
+        // // 加载wasm文件
+        // loadWebAssembly('./simple.wasm')
+        //     .then(instance => {
+        //         console.log(1);
+        //         // const maina = instance.exports.exported_func();
+        //         // console.log(maina)
+        //     })
+        let importObject = {
+            imports: {
+                imported_func: arg => console.log(arg),
+            }
+        };
+
+        fetch('test.wasm')
+            .then(res =>
+                res.arrayBuffer()
+            ).then(bytes =>
+                WebAssembly.instantiate(bytes, importObject)
+            ).then(results => {
+                results.instance.exports.exported_func(1.0);
+                // console.log(1);
+            });
+        // (async () => {
+        //     const response = await fetch('hello_world.wasm');
+        //     const file = await response.arrayBuffer();
+        //     const imports = { wasi_snapshot_preview1: { proc_exit: () => { } } } // dummy placeholder function, a sacrifice to the emscripten god who demands it
+        //     const wasm = await WebAssembly.instantiate(file, imports);
+        //     const { myFunction } = wasm.instance.exports;
+        //     // const myNumber = myFunction(123);
+        //     // console.log(myNumber); // 2126
+        // })();
+
+    </script>
+</body>
+
+</html>
